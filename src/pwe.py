@@ -7,10 +7,11 @@ from ctypes import (
     c_int8, 
     c_int, 
     c_uint8,
-    c_uint16,
+    c_uint32,
     c_bool,
     c_char,
     CDLL,
+    POINTER,
     CFUNCTYPE
 )
 from platform import system, python_version
@@ -21,7 +22,9 @@ from src.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
 PWE_VERSION: tuple = (1, 0, 0)
 PWE_NAME: str = "Python Window Engine"
 
-PWE_TRUE: TypeAlias = c_bool
+PWE_INITIALIZE: TypeAlias = int
+PWE_QUIT: TypeAlias = int
+PWE_TRUE: TypeAlias = c_bool 
 PWE_FALSE: TypeAlias = c_bool
 PWE_NUMBER: TypeAlias = c_int
 
@@ -32,6 +35,72 @@ PWE_PLATFORM_WINDOWS: str = "Windows"
 PWE_WINDOW_SDL = "SDL2.dll"
 PWE_DARWIN_SDL = "libSDL2.dylib"
 PWE_LINUX_SDL = "libSDL2.so"
+
+
+@dataclass
+class PWEWindow():
+    """_summary_
+
+    Attributes:
+        window_handle (int): _description_
+        platform (str): _description_
+    """
+    x: PWE_NUMBER
+    y: PWE_NUMBER
+    width: PWE_NUMBER
+    height: PWE_NUMBER
+    title: str
+    is_fullscreen: Union[PWE_TRUE, PWE_FALSE]
+    resizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
+    minimizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
+    closeable: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
+    decorated: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
+
+@dataclass
+class Color:
+    r: c_uint8
+    g: c_uint8
+    b: c_uint8
+    a: c_uint8 = 255
+
+@dataclass
+class PWEEvent:
+    event_name: str
+    event_type: Union[str, c_uint32]
+    event_callback: Union[str, c_uint32]
+    event_return: Union[None, c_uint32]    
+
+
+class PWELogger(object):
+    @staticmethod
+    def show_error(
+            msg: str,
+            error_type: Union[PWEBasicException, PWETypeError, PWEPlatformError]
+        ) -> None:
+        """
+        Args:
+            msg (str): _description_
+            error_type (Union[PWEBasicException, PWETypeError, PWEPlatformError]): _description_
+        """
+        error(f"{error_type.__name__}... {msg}")
+    
+    @staticmethod
+    def show_log(msg: str) -> None:
+        """_summary_
+
+        Args:
+            msg (str): _description_
+        """
+        info(msg)
+    
+    @staticmethod
+    def show_warning(msg: str) -> None:
+        """_summary_
+
+        Args:
+            msg (str): _description_
+        """
+        warning(msg)
 
 
 def check_platform():
@@ -69,56 +138,13 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
         return None
 
 
-class PWELogger(object):
-    @staticmethod
-    def show_error(
-            msg: str,
-            error_type: Union[PWEBasicException, PWETypeError, PWEPlatformError]
-        ) -> None:
-        """
-        Args:
-            msg (str): _description_
-            error_type (Union[PWEBasicException, PWETypeError, PWEPlatformError]): _description_
-        """
-        error(f"{error_type.__name__}... {msg}")
-    
-    @staticmethod
-    def show_log(msg: str) -> None:
-        """_summary_
-
-        Args:
-            msg (str): _description_
-        """
-        info(msg)
-    
-    @staticmethod
-    def show_warning(msg: str) -> None:
-        """_summary_
-
-        Args:
-            msg (str): _description_
-        """
-        warning(msg)
-
-
-@dataclass
-class PWEWindow():
-    """_summary_
-
-    Attributes:
-        window_handle (int): _description_
-        platform (str): _description_
-    """
-    x: PWE_NUMBER
-    y: PWE_NUMBER
-    width: PWE_NUMBER
-    height: PWE_NUMBER
-    title: str
-    is_fullscreen: Union[PWE_TRUE, PWE_FALSE]
-    resizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
-    minimizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
-    closeable: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
-    decorated: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
+def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None: 
+    if state == PWE_INITIALIZE:
+        sdl.SDL_Init(sdl.SDL_INIT_VIDEO)
+        sdl.SDL_Init(sdl.SDL_INIT_TIMER)
+        sdl.SDL_Init(sdl.SDL_INIT_EVENTS)
+        return None
+    sdl.SDL_Quit()
 
 
 def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
@@ -141,6 +167,7 @@ def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
         sdl = open_sdl_library(PWE_DARWIN_SDL)
     elif system_info[1] == PWE_PLATFORM_WINDOWS:
         sdl = open_sdl_library(PWE_WINDOW_SDL)
+    init_or_quit_sdl(PWE_INITIALIZE, sdl)
     return PWE_TRUE
 
 
@@ -157,10 +184,22 @@ def PWE_Terminate() -> None:
     Returns:
         None
     """
-    pass
+    init_or_quit_sdl(PWE_QUIT, sdl)
 
 
 def PWE_CreateWindow() -> Union[PWEWindow, None]:
+    """
+    Creates a new window with the specified parameters.
+
+    This function initializes a new window using the Simple DirectMedia Layer (SDL) library.
+    The window is created with the specified dimensions, title, and window properties.
+
+    Parameters:
+        None
+
+    Returns:
+        Union[PWEWindow, None]: A PWEWindow object representing the created window, or None if the window creation failed.
+    """
     return None
 
 
@@ -169,6 +208,10 @@ def PWE_DestroyWindow(window: PWEWindow) -> None:
 
 
 def PWE_SetWindowTitle(window: PWEWindow, title: str) -> None:
+    pass
+
+
+def PWE_SetWindowSize(window: PWEWindow, width: c_uint32, height: c_uint32):
     pass
 
 
