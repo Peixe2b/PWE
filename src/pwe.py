@@ -17,7 +17,7 @@ from ctypes import (
 )
 from dataclasses import dataclass
 from logging import info, warning, error
-from src.pwe_platform import PWE_ARCHITECTURE, check_system, get_info
+from src.pwe_platform import check_system, get_info
 from src.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
 
 PWE_VERSION: tuple = (1, 0, 0)
@@ -93,15 +93,19 @@ def PWE_Init() -> None:
     Raises:
         PWEPlatformError: _description_
     """
+    global sdl
     system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_system()
     pwe_sdl: Optional[Union[None, PWE_LINUX_SDL, PWE_DARWIN_SDL, PWE_WINDOW_SDL]] = None # type: ignore
 
     if system_is_valid == PWE_TRUE:
         system_info = get_info()
+        print(system_info)
     else:
         PWELogger.show_error("System is invalid", PWEPlatformError.__name__)
         raise PWEPlatformError("ERROR, Your system not work with PWE")
 
 
 def PWE_Terminate() -> None:
+    """_summary_
+    """
     pass

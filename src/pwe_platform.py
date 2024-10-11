@@ -1,16 +1,18 @@
 from platform import architecture, python_version
 from src.pwe import (
-    PWE_PLATFORM_LINUX,
     PWE_TRUE, PWE_FALSE,
     PWE_VERSION, PWE_NAME, 
     PWELogger 
 )
 
 PWE_ARCHITECTURE = architecture()
+
 PWE_PLATFORM_LINUX: str = "Linux"
+PWE_PLATFORM_DARWIN: str = "Darwin"
+PWE_PLATFORM_WINDOWS: str = "Windows"
 
 
-def check_system():
+def check_platform():
     if PWE_ARCHITECTURE[1] in (PWE_PLATFORM_LINUX): return PWE_TRUE
     return PWE_FALSE
 
