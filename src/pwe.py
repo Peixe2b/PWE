@@ -1,8 +1,6 @@
-#!/usr/bin/python
 from typing import (
     Any,
     Union, 
-    Optional,
     TypeAlias
 )
 from ctypes import (
@@ -15,22 +13,60 @@ from ctypes import (
     CDLL,
     CFUNCTYPE
 )
+from platform import system, python_version
 from dataclasses import dataclass
 from logging import info, warning, error
-from src.pwe_platform import check_system, get_info
 from src.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
 
 PWE_VERSION: tuple = (1, 0, 0)
 PWE_NAME: str = "Python Window Engine"
 
-# ------ PWE type variables ------ #
 PWE_TRUE: TypeAlias = c_bool
 PWE_FALSE: TypeAlias = c_bool
 PWE_NUMBER: TypeAlias = c_int
 
+PWE_SYSTEM = system()
+PWE_PLATFORM_LINUX: str = "Linux"
+PWE_PLATFORM_DARWIN: str = "Darwin"
+PWE_PLATFORM_WINDOWS: str = "Windows"
 PWE_WINDOW_SDL = "SDL2.dll"
 PWE_DARWIN_SDL = "libSDL2.dylib"
 PWE_LINUX_SDL = "libSDL2.so"
+
+
+def check_platform():
+    if PWE_SYSTEM in (
+        PWE_PLATFORM_LINUX, PWE_PLATFORM_DARWIN,
+        PWE_PLATFORM_WINDOWS
+    ): return PWE_TRUE 
+    return PWE_FALSE
+
+
+def get_info() -> tuple:
+    """
+    Returns:
+        tuple: (PWE version, system architecture, PWE name, Python version)
+    """
+    PWELogger.show_log(f"PWE version: {PWE_VERSION}")
+    PWELogger.show_log(f"System architecture: {PWE_SYSTEM}")
+    PWELogger.show_log(f"PWE name: {PWE_NAME}")
+    PWELogger.show_log(f"Python version: {python_version()}")
+    return (
+        PWE_VERSION, PWE_SYSTEM, 
+        PWE_NAME, python_version()
+    )
+
+
+def open_sdl_library(cdll_name) -> Union[None, Any]:
+    """
+    Returns:
+        Union[None, Any]: SDL library loaded or None if not found
+    """
+    try:
+        return CDLL(cdll_name)
+    except FileNotFoundError:
+        PWELogger.show_error(f"SDL library not found: {cdll_name}", PWEPlatformError)
+        return None
 
 
 class PWELogger(object):
@@ -39,13 +75,11 @@ class PWELogger(object):
             msg: str,
             error_type: Union[PWEBasicException, PWETypeError, PWEPlatformError]
         ) -> None:
-        """_summary_
-
+        """
         Args:
             msg (str): _description_
             error_type (Union[PWEBasicException, PWETypeError, PWEPlatformError]): _description_
         """
-        
         error(f"{error_type.__name__}... {msg}")
     
     @staticmethod
@@ -87,25 +121,60 @@ class PWEWindow():
     decorated: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
 
 
-def PWE_Init() -> None:
+def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
     """_summary_
 
     Raises:
         PWEPlatformError: _description_
     """
     global sdl
-    system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_system()
-    pwe_sdl: Optional[Union[None, PWE_LINUX_SDL, PWE_DARWIN_SDL, PWE_WINDOW_SDL]] = None # type: ignore
+    system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_platform()
 
-    if system_is_valid == PWE_TRUE:
-        system_info = get_info()
-        print(system_info)
-    else:
-        PWELogger.show_error("System is invalid", PWEPlatformError.__name__)
-        raise PWEPlatformError("ERROR, Your system not work with PWE")
+    if system_is_valid != PWE_TRUE:
+        PWELogger.show_error("System is invalid", PWEPlatformError)
+        return PWE_FALSE
+    
+    system_info = get_info()
+    if system_info[1] == PWE_PLATFORM_LINUX:
+        sdl = open_sdl_library(PWE_LINUX_SDL)
+    elif system_info[1] == PWE_PLATFORM_DARWIN:
+        sdl = open_sdl_library(PWE_DARWIN_SDL)
+    elif system_info[1] == PWE_PLATFORM_WINDOWS:
+        sdl = open_sdl_library(PWE_WINDOW_SDL)
+    return PWE_TRUE
 
 
 def PWE_Terminate() -> None:
-    """_summary_
     """
+    Quits the Simple DirectMedia Layer (SDL) library.
+
+    This function is responsible for properly shutting down the SDL library and releasing any resources it has allocated.
+    After calling this function, no SDL functions should be called, and the SDL library should not be used.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
+    pass
+
+
+def PWE_CreateWindow() -> Union[PWEWindow, None]:
+    return None
+
+
+def PWE_DestroyWindow(window: PWEWindow) -> None:
+    pass
+
+
+def PWE_SetWindowTitle(window: PWEWindow, title: str) -> None:
+    pass
+
+
+def PWE_SetFullscreen(window: PWEWindow, is_fullscreen: PWE_TRUE | PWE_FALSE) -> None:
+    pass
+
+
+def PWE_WindowShouldClose() -> None:
     pass
