@@ -16,6 +16,10 @@ def check_system():
 
 
 def get_info() -> tuple:
+    """
+    Returns:
+        tuple: (PWE version, system architecture, PWE name, Python version)
+    """
     PWELogger.show_log(f"PWE version: {PWE_VERSION}")
     PWELogger.show_log(f"System architecture: {PWE_ARCHITECTURE}")
     PWELogger.show_log(f"PWE name: {PWE_NAME}")

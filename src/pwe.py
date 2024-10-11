@@ -28,8 +28,9 @@ PWE_TRUE: TypeAlias = c_bool
 PWE_FALSE: TypeAlias = c_bool
 PWE_NUMBER: TypeAlias = c_int
 
-PWE_LINUX_X11: str = "x11"
-PWE_LINUX_WAYLAND: str = "wayland"
+PWE_WINDOW_SDL = "SDL2.dll"
+PWE_DARWIN_SDL = "libSDL2.dylib"
+PWE_LINUX_SDL = "libSDL2.so"
 
 
 class PWELogger(object):
@@ -44,6 +45,7 @@ class PWELogger(object):
             msg (str): _description_
             error_type (Union[PWEBasicException, PWETypeError, PWEPlatformError]): _description_
         """
+        
         error(f"{error_type.__name__}... {msg}")
     
     @staticmethod
@@ -67,7 +69,11 @@ class PWELogger(object):
 
 @dataclass
 class PWEWindow():
-    """
+    """_summary_
+
+    Attributes:
+        window_handle (int): _description_
+        platform (str): _description_
     """
     x: PWE_NUMBER
     y: PWE_NUMBER
@@ -88,7 +94,7 @@ def PWE_Init() -> None:
         PWEPlatformError: _description_
     """
     system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_system()
-    pwe_video_drive: Optional[Union[None, PWE_LINUX_X11, PWE_LINUX_WAYLAND]] = None # type: ignore
+    pwe_sdl: Optional[Union[None, PWE_LINUX_SDL, PWE_DARWIN_SDL, PWE_WINDOW_SDL]] = None # type: ignore
 
     if system_is_valid == PWE_TRUE:
         system_info = get_info()
