@@ -140,9 +140,7 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
 
 def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None: 
     if state == PWE_INITIALIZE:
-        sdl.SDL_Init(sdl.SDL_INIT_VIDEO)
-        sdl.SDL_Init(sdl.SDL_INIT_TIMER)
-        sdl.SDL_Init(sdl.SDL_INIT_EVENTS)
+        sdl.SDL_Init()
         return None
     sdl.SDL_Quit()
 
