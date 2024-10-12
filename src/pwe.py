@@ -1,16 +1,17 @@
 from typing import (
     Any,
     Union, 
-    TypeAlias
+    TypeAlias,
+    List,
+    Callable
 )
 from ctypes import (
     c_int, 
     c_uint8,
     c_uint32,
     c_bool,
-    c_char,
+    c_wchar_p,
     CDLL,
-    POINTER,
     CFUNCTYPE
 )
 from platform import system, python_version
@@ -64,9 +65,9 @@ class Color:
 
 @dataclass
 class PWEEvent:
-    event_name: str
-    event_type: Union[str, c_uint32]
-    event_callback: Union[str, c_uint32]
+    event_name: c_wchar_p
+    event_type: Union[c_wchar_p, c_uint32]
+    event_callback: Union[c_wchar_p, c_uint32]
     event_return: Union[None, c_uint32]    
 
 
@@ -100,6 +101,17 @@ class PWELogger(object):
             msg (str): _description_
         """
         warning(msg)
+
+
+class PWEEventController:
+    def __init__(self, events: List[PWEEvent]):
+        self.index = 0
+
+    def next(self) -> Union[None, Any]:
+        pass
+
+    def has_more(self) -> bool:
+        return True
 
 
 def check_platform():
@@ -227,18 +239,6 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
 
 
 def PWE_DestroyWindow(window: PWEWindow) -> None:
-    pass
-
-
-def PWE_SetWindowTitle(window: PWEWindow, title: str) -> None:
-    pass
-
-
-def PWE_SetWindowSize(window: PWEWindow, width: c_uint32, height: c_uint32):
-    pass
-
-
-def PWE_SetFullscreen(window: PWEWindow, is_fullscreen: PWE_TRUE | PWE_FALSE) -> None:
     pass
 
 

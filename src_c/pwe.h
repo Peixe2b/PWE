@@ -33,6 +33,11 @@ typedef struct {
     alpha int;
 } Color;
 
+typedef struct {
+    event_name char*;
+    event_type int;
+}
+
 typedef enum {
 } PWE_KeyCode;
 
