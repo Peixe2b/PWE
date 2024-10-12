@@ -5,6 +5,5 @@ from src.pwe import (
 from src.pwe import (
     PWE_Init, PWE_Terminate,
     PWE_CreateWindow, PWE_DestroyWindow,
-    PWE_SetFullscreen, PWE_SetWindowSize, PWE_SetWindowTitle,
     PWE_WindowShouldClose
 )
