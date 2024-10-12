@@ -4,7 +4,6 @@ from typing import (
     TypeAlias
 )
 from ctypes import (
-    c_int8, 
     c_int, 
     c_uint8,
     c_uint32,
@@ -145,6 +144,19 @@ def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
     sdl.SDL_Quit()
 
 
+def open_window(window: PWEWindow) -> Union[Any, None]:
+    try:
+        title_encode = window.title.decode()
+        window_instance = sdl.SDL_CreateWindow(
+            title_encode, window.x, window.y,
+            window.width, window.height, None
+        )
+        return window_instance
+    except:
+        PWELogger.show_error(f"Failed to create window: {window.title}", PWEPlatformError)
+        return None
+
+
 def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
     """_summary_
 
@@ -185,7 +197,7 @@ def PWE_Terminate() -> None:
     init_or_quit_sdl(PWE_QUIT, sdl)
 
 
-def PWE_CreateWindow() -> Union[PWEWindow, None]:
+def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, None]:
     """
     Creates a new window with the specified parameters.
 
@@ -193,12 +205,25 @@ def PWE_CreateWindow() -> Union[PWEWindow, None]:
     The window is created with the specified dimensions, title, and window properties.
 
     Parameters:
-        None
+        title: str = window title
+        width: int = window width
+        height: int = window height
 
     Returns:
         Union[PWEWindow, None]: A PWEWindow object representing the created window, or None if the window creation failed.
     """
-    return None
+
+    if width < 0 or height < 0:
+        PWELogger.show_error("Window dimensions must be positive", PWETypeError)
+        return None
+
+    window = PWEWindow(
+        50, 50, width, height,
+        title.encode(), PWE_FALSE, PWE_FALSE,
+        PWE_FALSE, PWE_FALSE, PWE_FALSE
+    ) 
+    open_window(window)
+    return window
 
 
 def PWE_DestroyWindow(window: PWEWindow) -> None:
