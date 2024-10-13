@@ -107,13 +107,21 @@ class PWELogger(object):
 
 
 class PWEEventController:
-    def __init__(self, events: List[PWEEvent]):
-        self.index = 0
+    def __init__(self):
+        self.index: int = 0
+        self.events = PWE_EVENTS 
+        self.type: Any = None
 
     def next(self) -> Union[None, Any]:
-        pass
+        if self.has_more():
+            self.index += 1
+            self.type = self.events[self.index - 1]
+            return self.type
+        return None
 
     def has_more(self) -> bool:
+        if self.index > len(self.events) - 1:
+            return False
         return True
 
 
@@ -265,5 +273,12 @@ def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
     return PWE_FALSE
 
 
-def PWE_PollEvents(events: PWEEventController):
-    pass
+def PWE_PollEvents(events: PWEEventController) -> bool:
+    while events.has_more():
+        events.next()
+        # PWELogger.show_warning(str(events.type))
+    
+    if events.has_more() == False:
+        events.index = 0
+        return False
+    return True
