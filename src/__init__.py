@@ -5,5 +5,7 @@ from src.pwe import (
 from src.pwe import (
     PWE_Init, PWE_Terminate,
     PWE_CreateWindow, PWE_DestroyWindow,
-    PWE_WindowShouldClose, PWE_PollEvents
+    PWE_WindowShouldClose, PWE_PollEvents,
+    PWEEventController
 )
+from src.pwe_events import *
