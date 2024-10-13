@@ -53,7 +53,7 @@ class PWEWindow():
     is_fullscreen: Union[PWE_TRUE, PWE_FALSE]
     resizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
     minimizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
-    closeable: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
+    closed: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
     decorated: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
 
 @dataclass
@@ -242,5 +242,7 @@ def PWE_DestroyWindow(window: PWEWindow) -> None:
     pass
 
 
-def PWE_WindowShouldClose() -> None:
-    pass
+def PWE_WindowShouldClose(window: PWEWindow) -> bool:
+    if window.closed == PWE_TRUE:
+        return True
+    return False
