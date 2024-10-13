@@ -11,13 +11,14 @@ from ctypes import (
     c_uint32,
     c_bool,
     c_wchar_p,
-    CDLL,
-    CFUNCTYPE
+    CDLL
 )
 from platform import system, python_version
 from dataclasses import dataclass
 from logging import info, warning, error
+from src.pwe_events import *
 from src.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
+
 
 PWE_VERSION: tuple = (1, 0, 0)
 PWE_NAME: str = "Python Window Engine"
@@ -27,6 +28,8 @@ PWE_QUIT: TypeAlias = int
 PWE_TRUE: TypeAlias = c_bool 
 PWE_FALSE: TypeAlias = c_bool
 PWE_NUMBER: TypeAlias = c_int
+PWE_RELEASE = 0
+PWE_PRESS = 1
 
 PWE_SYSTEM = system()
 PWE_PLATFORM_LINUX: str = "Linux"
@@ -67,8 +70,8 @@ class Color:
 class PWEEvent:
     event_name: c_wchar_p
     event_type: Union[c_wchar_p, c_uint32]
-    event_callback: Union[c_wchar_p, c_uint32]
-    event_return: Union[None, c_uint32]    
+    event_callback: Union[None, Callable]
+    event_return: Union[None, Any]    
 
 
 class PWELogger(object):
@@ -260,3 +263,7 @@ def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
     if window.closed == PWE_TRUE:
         return PWE_TRUE
     return PWE_FALSE
+
+
+def PWE_PollEvents(events: PWEEventController):
+    pass
