@@ -1,9 +1,13 @@
-import src as pwe
+from src import *
 
-pwe.PWE_Init()
-window = pwe.PWE_CreateWindow("Game1", 800, 500)
+PWE_Init()
+window = PWE_CreateWindow("Game1", 800, 500)
 
-while pwe.PWE_WindowShouldClose(window):
-    pwe.PWELogger.show_log("Window Update")
+while PWE_WindowShouldClose(window):
+    events = PWEEventController()
 
-pwe.PWE_Terminate()
+    # PWELogger.show_warning("WINDOW UPDATE")
+    while PWE_PollEvents(events):
+        if events.type == PWE_KEY_SPACE:
+            PWELogger.show_warning("Space pressed")
+PWE_Terminate()
