@@ -242,7 +242,21 @@ def PWE_DestroyWindow(window: PWEWindow) -> None:
     pass
 
 
-def PWE_WindowShouldClose(window: PWEWindow) -> bool:
+def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
+    """
+    Checks if the specified window should be closed.
+
+    This function checks the 'closed' attribute of the given PWEWindow object.
+    If the 'closed' attribute is set to PWE_TRUE, the function returns True, indicating that the window should be closed.
+    Otherwise, the function returns False, indicating that the window should not be closed.
+
+    Parameters:
+        window (PWEWindow): The PWEWindow object to check for closure.
+
+    Returns:
+        Union[PWE_TRUE or PWE_FALSE]: PWE_TRUE if the window should be closed, PWE_FALSE otherwise.
+    """
+
     if window.closed == PWE_TRUE:
-        return True
-    return False
+        return PWE_TRUE
+    return PWE_FALSE
