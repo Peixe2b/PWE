@@ -247,12 +247,16 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
 
 
 def PWE_CreateRenderer(window: PWEWindow):
-    renderer = sdl.SDL_CreateRenderer(window.handle, -1, 0)
+    renderer = sdl.SDL_CreateRenderer(window.handle, -1, 0x00000001)
     return renderer
 
 
 def PWE_RenderPresent(renderer):
     sdl.SDL_RenderPresent(renderer)
+
+
+def PWE_SetRenderDrawColor(render, color: PWEColor):
+    sdl.SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a)
 
 
 def PWE_DestroyWindow(window: PWEWindow) -> None:
