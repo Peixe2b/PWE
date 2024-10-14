@@ -41,13 +41,7 @@ PWE_LINUX_SDL = "libSDL2.so"
 
 
 @dataclass
-class PWEWindow():
-    """_summary_
-
-    Attributes:
-        window_handle (int): _description_
-        platform (str): _description_
-    """
+class PWEWindow:
     x: PWE_NUMBER
     y: PWE_NUMBER
     width: PWE_NUMBER
@@ -58,9 +52,10 @@ class PWEWindow():
     minimizable: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
     closed: Union[PWE_TRUE, PWE_FALSE] = PWE_FALSE
     decorated: Union[PWE_TRUE, PWE_FALSE] = PWE_TRUE
+    handle: Any = None
 
 @dataclass
-class Color:
+class PWEColor:
     r: c_uint8
     g: c_uint8
     b: c_uint8
@@ -162,7 +157,9 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
 
 def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None: 
     if state == PWE_INITIALIZE:
-        sdl.SDL_Init()
+        sdl.SDL_Init(0x00000020)
+        sdl.SDL_Init(0x00000010)
+        sdl.SDL_Init(0x00004000)
         return None
     sdl.SDL_Quit()
 
@@ -245,12 +242,25 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
         title.encode(), PWE_FALSE, PWE_FALSE,
         PWE_FALSE, PWE_FALSE, PWE_FALSE
     ) 
-    open_window(window)
+    window.handle = open_window(window)
     return window
 
 
+def PWE_CreateRenderer(window: PWEWindow):
+    renderer = sdl.SDL_CreateRenderer(window.handle, -1, 0)
+    return renderer
+
+
+def PWE_RenderPresent(renderer):
+    sdl.SDL_RenderPresent(renderer)
+
+
 def PWE_DestroyWindow(window: PWEWindow) -> None:
-    pass
+    sdl.SDL_DestroyWindow(window.handle)
+
+
+def PWE_UpdateWindow(window: PWEWindow) -> None:
+    sdl.SDL_UpdateWindowSurface(window.handle)
 
 
 def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
@@ -274,10 +284,22 @@ def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
 
 
 def PWE_PollEvents(events: PWEEventController) -> bool:
+    """
+    Polls for events from the event controller.
+
+    This function iterates through the events in the event controller and processes each event.
+    It returns True if there are more events to process, and False if the event controller is empty.
+
+    Parameters:
+        events (PWEEventController): The event controller containing the events to be processed.
+
+    Returns:
+        bool: True if there are more events to process, False if the event controller is empty.
+    """
     while events.has_more():
         events.next()
         # PWELogger.show_warning(str(events.type))
-    
+
     if events.has_more() == False:
         events.index = 0
         return False
