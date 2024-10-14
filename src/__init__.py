@@ -6,7 +6,7 @@ from src.pwe import (
     PWE_Init, PWE_Terminate,
     PWE_CreateWindow, PWE_DestroyWindow,
     PWE_WindowShouldClose, PWE_PollEvents, PWE_UpdateWindow,
-    PWE_CreateRenderer, PWE_RenderPresent,
-    PWEEventController
+    PWE_CreateRenderer, PWE_RenderPresent, PWE_SetRenderDrawColor,
+    PWEEventController, PWEColor
 )
 from src.pwe_events import *
