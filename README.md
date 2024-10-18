@@ -1,2 +1,2 @@
 # PWE
-PWE (python window engine) a simple window with OpenGLES context
+PWE (python window engine) a simple game framework with SDL2
