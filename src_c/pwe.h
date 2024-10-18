@@ -15,15 +15,11 @@ typedef struct {
     height int;
     title char*;
     is_fullscreen bool;
-    is_resizable bool;
-    is_visible bool;
-    is_active bool;
-    is_focused bool;
-    is_minimized bool;
-    is_maximized bool;
-    is_decorated bool;
-    closeable bool;
+    resizable bool;
+    minimizable bool;
+    closed bool;
     decorated bool;
+    handle char*;
 } PWEWindow;
 
 typedef struct {
