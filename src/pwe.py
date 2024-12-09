@@ -16,6 +16,7 @@ from ctypes import (
 from platform import system, python_version
 from dataclasses import dataclass
 from logging import info, warning, error
+
 from src.pwe_events import *
 from src.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
 
@@ -178,11 +179,6 @@ def open_window(window: PWEWindow) -> Union[Any, None]:
 
 
 def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
-    """_summary_
-
-    Raises:
-        PWEPlatformError: _description_
-    """
     global sdl
     system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_platform()
 
@@ -207,12 +203,6 @@ def PWE_Terminate() -> None:
 
     This function is responsible for properly shutting down the SDL library and releasing any resources it has allocated.
     After calling this function, no SDL functions should be called, and the SDL library should not be used.
-
-    Parameters:
-        None
-
-    Returns:
-        None
     """
     init_or_quit_sdl(PWE_QUIT, sdl)
 
@@ -244,27 +234,6 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
     ) 
     window.handle = open_window(window)
     return window
-
-
-def PWE_CreateRenderer(window: PWEWindow):
-    renderer = sdl.SDL_CreateRenderer(window.handle, -1, 0x00000001)
-    return renderer
-
-
-def PWE_RenderPresent(renderer):
-    sdl.SDL_RenderPresent(renderer)
-
-
-def PWE_SetRenderDrawColor(render, color: PWEColor):
-    sdl.SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a)
-
-
-def PWE_DestroyWindow(window: PWEWindow) -> None:
-    sdl.SDL_DestroyWindow(window.handle)
-
-
-def PWE_UpdateWindow(window: PWEWindow) -> None:
-    sdl.SDL_UpdateWindowSurface(window.handle)
 
 
 def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
