@@ -32,15 +32,10 @@ typedef struct {
 typedef struct {
     event_name char*;
     event_type int;
-}
+} Event;
 
 typedef enum {
 } PWE_KeyCode;
 
 typedef enum {
 } PWE_MouseCode;
-
-
-void PWE_Init(uint *flag);
-PWEWindow* PWE_CreateWindow(const char* title, int width, int height, int flag);
-void PWE_Terminate(uint *flag);
