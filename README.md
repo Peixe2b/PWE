@@ -3,7 +3,7 @@
 PWE (python window engine) um framework de jogo simples, mas eficiente
 
 ### Índice
-[TODO](#todo)  [INSTALAÇÃO](#instalação)  [USO](#uso)
+[TODO](#todo) [SUPORTE](#suporte) [INSTALAÇÃO](#instalação)  [USO](#uso)
 
 ---
 
@@ -20,6 +20,12 @@ PWE (python window engine) um framework de jogo simples, mas eficiente
 - [x] Gerenciador de estado de jogo  
 - [x] Criação de componentes
 - [x] GameTimer 
+
+
+
+### SUPORTE
+
+
 
 ### INSTALAÇÃO
 
