@@ -1,12 +1,20 @@
 <div align="center">
- <h1>PWE</h1>
-Um framework de jogo simples, mas eficiente
+  <h1>PWE</h1>
+  Um framework de jogo simples, mas eficiente
   
-[Sobre](#sobre) • [Todo](#todo) • [Suporte](#suporte) • [Instalação](#instalação) • [Uso](#uso)
-
+  <a href="#sobre">Sobre</a> • 
+  <a href="#todo">Todo</a> • 
+  <a href="#suporte">Suporte</a> • 
+  <a href="#instalacao">Instalação</a> • 
+  <a href="#uso">Uso</a>
 </div>
 
+<hr>
+
 ### SOBRE
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<hr>
 
 ### TODO
   - [x] Criação de janelas
@@ -24,13 +32,34 @@ Um framework de jogo simples, mas eficiente
   - [ ] Sistema de Animação
   - [x] Gerenciador de eventos 
 
+<hr>
 
 ### SUPORTE
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+ * Windows
+    * Windows 10
+    * Windows 8.1 (With OpenGL and SDL2 DLL)
+ * MacOS
+ * Linux
+    * Ubuntu
+    * Bothi Linux
+    * Linux Mint
+    * Debian
 
+<hr>
 
 ### INSTALAÇÃO
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-
+<hr>
 
 ### USO
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<hr>
+
+## Linux
+```bash
+sudo apt install libsdl2-dev
+bash install.sh
