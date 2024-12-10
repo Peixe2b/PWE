@@ -1,26 +1,28 @@
-<h1 style="text-align: center;">PWE</h1>
+<div align="center">
+ <h1>PWE</h1>
+Um framework de jogo simples, mas eficiente
+  
+[Sobre](#sobre) • [Todo](#todo) • [Suporte](#suporte) • [Instalação](#instalação) • [Uso](#uso)
 
-PWE (python window engine) um framework de jogo simples, mas eficiente
+</div>
 
-### Índice
-[TODO](#todo) [SUPORTE](#suporte) [INSTALAÇÃO](#instalação)  [USO](#uso)
-
----
+### SOBRE
 
 ### TODO
-- [x] Criação de janelas
-- [x] Atualização e renderizar
-- [x] Gerenciamento de janelas
-- [ ] Editor de mapa
-- [ ] Editor de sprites
-- [x] Texturas
-- [ ] Áudio
-- [x] Wrapper para o SDL
-- [x] Tratamento de Erros
-- [x] Gerenciador de estado de jogo  
-- [x] Criação de componentes
-- [x] GameTimer 
-
+  - [x] Criação de janelas
+  - [x] Atualização e renderizar
+  - [x] Gerenciamento de janelas
+  - [ ] Editor de mapa
+  - [ ] Editor de sprites
+  - [ ] Texturas
+  - [ ] Áudio
+  - [x] Wrapper para o SDL
+  - [x] Tratamento de Erros
+  - [x] Gerenciador de estado de jogo  
+  - [x] Criação de componentes
+  - [x] GameTimer
+  - [ ] Sistema de Animação
+  - [x] Gerenciador de eventos 
 
 
 ### SUPORTE
