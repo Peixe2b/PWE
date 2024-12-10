@@ -17,9 +17,17 @@ from platform import system, python_version
 from dataclasses import dataclass
 from logging import info, warning, error
 
-from src.pwe_events import *
-from src.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
+from PWE.pwe_events import *
+from PWE.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
 
+
+PWE_SYSTEM = system()
+PWE_PLATFORM_LINUX: str = "Linux"
+PWE_PLATFORM_DARWIN: str = "Darwin"
+PWE_PLATFORM_WINDOWS: str = "Windows"
+PWE_WINDOW_SDL = "SDL2.dll"
+PWE_DARWIN_SDL = "libSDL2.dylib"
+PWE_LINUX_SDL = "libSDL2.so"
 
 PWE_VERSION: tuple = (1, 0, 0)
 PWE_NAME: str = "Python Window Engine"
@@ -31,14 +39,6 @@ PWE_FALSE: TypeAlias = c_bool
 PWE_NUMBER: TypeAlias = c_int
 PWE_RELEASE = 0
 PWE_PRESS = 1
-
-PWE_SYSTEM = system()
-PWE_PLATFORM_LINUX: str = "Linux"
-PWE_PLATFORM_DARWIN: str = "Darwin"
-PWE_PLATFORM_WINDOWS: str = "Windows"
-PWE_WINDOW_SDL = "SDL2.dll"
-PWE_DARWIN_SDL = "libSDL2.dylib"
-PWE_LINUX_SDL = "libSDL2.so"
 
 
 @dataclass
@@ -170,7 +170,7 @@ def open_window(window: PWEWindow) -> Union[Any, None]:
         title_encode = window.title.decode()
         window_instance = sdl.SDL_CreateWindow(
             title_encode, window.x, window.y,
-            window.width, window.height, None
+            window.width, window.height, sdl.SDL_WINDOW_SHOWN
         )
         return window_instance
     except:
@@ -254,6 +254,20 @@ def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
     if window.closed == PWE_TRUE:
         return PWE_TRUE
     return PWE_FALSE
+
+
+def PWE_GetSurface(window: PWEWindow) -> Any:
+    if window.handle != None:    
+        return sdl.SDL_GetWindowSurface(window.handle)
+    return None
+
+
+def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicException, None]:
+    try:
+        sdl.UpdateWindowSurface(window)
+    except:
+        PWELogger.show_error(f"Failed to update window: {window.title}", PWEBasicException)
+        return PWEBasicException
 
 
 def PWE_PollEvents(events: PWEEventController) -> bool:
