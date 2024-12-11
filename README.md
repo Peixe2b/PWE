@@ -24,14 +24,21 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   - [ ] Editor de sprites
   - [ ] Texturas
   - [ ] Áudio
-  - [x] Wrapper para o SDL
   - [x] Tratamento de Erros
   - [x] Gerenciador de estado de jogo  
   - [x] Criação de componentes
   - [x] GameTimer
   - [ ] Sistema de Animação
   - [x] Gerenciador de eventos
-  - [x] Entradas de teclado e mouse 
+  - [x] Entradas de teclado e mouse
+  - [x] Logger
+  - [ ] Conexões com outras APIs
+    - [ ] OpenGL
+    - [ ] CUDA
+    - [ ] STB
+    - [ ] OpenAL
+    - [x] SDL2
+    - [x] PIL
 
 <hr>
 
