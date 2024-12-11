@@ -30,7 +30,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   - [x] Criação de componentes
   - [x] GameTimer
   - [ ] Sistema de Animação
-  - [x] Gerenciador de eventos 
+  - [x] Gerenciador de eventos
+  - [x] Entradas de teclado e mouse 
 
 <hr>
 
