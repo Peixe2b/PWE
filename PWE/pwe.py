@@ -6,11 +6,9 @@ from typing import (
     Callable
 )
 from ctypes import (
-    c_int, 
-    c_uint8,
-    c_uint32,
-    c_bool,
-    c_wchar_p,
+    c_int, c_uint8, c_uint32,
+    c_bool, c_float, c_void_p,
+    c_wchar_p, c_char_p, POINTER,
     CDLL
 )
 from platform import system, python_version
@@ -39,6 +37,7 @@ PWE_FALSE: TypeAlias = c_bool
 PWE_NUMBER: TypeAlias = c_int
 PWE_RELEASE = 0
 PWE_PRESS = 1
+PWE_FLAG = 0x0000
 
 
 @dataclass
@@ -68,6 +67,10 @@ class PWEEvent:
     event_type: Union[c_wchar_p, c_uint32]
     event_callback: Union[None, Callable]
     event_return: Union[None, Any]    
+
+
+
+
 
 
 class PWELogger(object):
@@ -102,16 +105,19 @@ class PWELogger(object):
         warning(msg)
 
 
+
+
+
 class PWEEventController:
     def __init__(self):
         self.index: int = 0
-        self.events = PWE_EVENTS 
+        # self.events = PWE_EVENTS 
         self.type: Any = None
 
     def next(self) -> Union[None, Any]:
         if self.has_more():
             self.index += 1
-            self.type = self.events[self.index - 1]
+            self.type = PWE_EVENTS[self.index - 1]
             return self.type
         return None
 
@@ -121,12 +127,18 @@ class PWEEventController:
         return True
 
 
+
+
+
 def check_platform():
     if PWE_SYSTEM in (
         PWE_PLATFORM_LINUX, PWE_PLATFORM_DARWIN,
         PWE_PLATFORM_WINDOWS
     ): return PWE_TRUE 
     return PWE_FALSE
+
+
+
 
 
 def get_info() -> tuple:
@@ -144,6 +156,9 @@ def get_info() -> tuple:
     )
 
 
+
+
+
 def open_sdl_library(cdll_name) -> Union[None, Any]:
     """
     Returns:
@@ -156,6 +171,10 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
         return None
 
 
+
+
+
+
 def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None: 
     if state == PWE_INITIALIZE:
         sdl.SDL_Init(0x00000020)
@@ -165,17 +184,30 @@ def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
     sdl.SDL_Quit()
 
 
+
+
+
+
+
 def open_window(window: PWEWindow) -> Union[Any, None]:
     try:
-        title_encode = window.title.decode()
+        title_encode = c_char_p(window.title)
         window_instance = sdl.SDL_CreateWindow(
-            title_encode, window.x, window.y,
-            window.width, window.height, sdl.SDL_WINDOW_SHOWN
+            title_encode.value, window.x, window.y, window.width,
+            window.height, 0
         )
         return window_instance
+    except AttributeError as e:
+        PWELogger.show_error(f"AttributeError... / {e}", PWEBasicException)
+        return None
     except:
         PWELogger.show_error(f"Failed to create window: {window.title}", PWEPlatformError)
         return None
+
+
+
+
+
 
 
 def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
@@ -197,6 +229,9 @@ def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
     return PWE_TRUE
 
 
+
+
+
 def PWE_Terminate() -> None:
     """
     Quits the Simple DirectMedia Layer (SDL) library.
@@ -205,6 +240,10 @@ def PWE_Terminate() -> None:
     After calling this function, no SDL functions should be called, and the SDL library should not be used.
     """
     init_or_quit_sdl(PWE_QUIT, sdl)
+
+
+
+
 
 
 def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, None]:
@@ -223,6 +262,12 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
         Union[PWEWindow, None]: A PWEWindow object representing the created window, or None if the window creation failed.
     """
 
+    sdl.SDL_CreateWindow.argtypes = [
+        c_char_p, c_int, c_int, c_int,
+        c_int, c_int
+    ]
+    sdl.SDL_CreateWindow.restype = c_void_p
+
     if width < 0 or height < 0:
         PWELogger.show_error("Window dimensions must be positive", PWETypeError)
         return None
@@ -234,6 +279,10 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
     ) 
     window.handle = open_window(window)
     return window
+
+
+
+
 
 
 def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
@@ -256,18 +305,39 @@ def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
     return PWE_FALSE
 
 
+
+
+
+
+
 def PWE_GetSurface(window: PWEWindow) -> Any:
-    if window.handle != None:    
-        return sdl.SDL_GetWindowSurface(window.handle)
+    sdl.SDL_GetWindowSurface.argtypes = [c_void_p]
+    sdl.SDL_GetWindowSurface.restype = c_void_p
+
+    if window.handle is not None:    
+        surface = sdl.SDL_GetWindowSurface(window.handle)
+        return surface
     return None
 
 
-def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicException, None]:
+
+
+
+
+
+def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicException, Any]:
+    sdl.SDL_UpdateWindowSurface.argtypes = [c_void_p]
+    sdl.SDL_UpdateWindowSurface.restype = c_void_p
+
     try:
-        sdl.UpdateWindowSurface(window)
-    except:
-        PWELogger.show_error(f"Failed to update window: {window.title}", PWEBasicException)
+        sdl.SDL_UpdateWindowSurface(window.handle)
+    except PWEBasicException as e:
+        PWELogger.show_error(f"Failed to update window: {window.title}, because {e}", PWEBasicException)
         return PWEBasicException
+
+
+
+
 
 
 def PWE_PollEvents(events: PWEEventController) -> bool:

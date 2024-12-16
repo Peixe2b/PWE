@@ -1,17 +1,12 @@
 from PWE import *
 
 PWE_Init()
-window = PWE_CreateWindow("Game1", 800, 500)
-surface = PWE_GetSurface(window)
+
+window = PWE_CreateWindow("MyGame", 800, 500)
 
 try:
     while PWE_WindowShouldClose(window):
-        events = PWEEventController()
-
-        while(PWE_PollEvents(events)):
-            pass
-
+        events = PWEEventController()        
         PWE_UpdateWindow(window)
-except:
+except KeyboardInterrupt:
     PWE_Terminate()
-
