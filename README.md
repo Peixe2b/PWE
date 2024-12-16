@@ -19,19 +19,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 ### TODO
   - [x] Criação de janelas
   - [x] Atualização e renderizar
-  - [x] Gerenciamento de janelas
+  - [ ] Gerenciamento de janelas
   - [ ] Editor de mapa
   - [ ] Editor de sprites
   - [ ] Texturas
   - [ ] Áudio
   - [x] Tratamento de Erros
-  - [x] Gerenciador de estado de jogo  
+  - [ ] Gerenciador de estado de jogo  
   - [ ] Criação de componentes
   - [ ] GameTimer
   - [ ] IO
   - [ ] Sistema de Animação
-  - [x] Gerenciador de eventos
-  - [x] Entradas de teclado e mouse
+  - [ ] Gerenciador de eventos
+  - [ ] Entradas de teclado e mouse
   - [x] Logger
   - [ ] Conexões com outras APIs
     - [ ] OpenGL
