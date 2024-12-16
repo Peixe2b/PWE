@@ -134,7 +134,8 @@ def check_platform():
     if PWE_SYSTEM in (
         PWE_PLATFORM_LINUX, PWE_PLATFORM_DARWIN,
         PWE_PLATFORM_WINDOWS
-    ): return PWE_TRUE 
+    ): return PWE_TRUE
+    # raise PWEPlatformError
     return PWE_FALSE
 
 
@@ -175,7 +176,7 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
 
 
 
-def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None: 
+def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
     if state == PWE_INITIALIZE:
         sdl.SDL_Init(0x00000020)
         sdl.SDL_Init(0x00000010)
