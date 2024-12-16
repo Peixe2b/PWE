@@ -39,7 +39,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     - [ ] STB
     - [ ] OpenAL
     - [x] SDL2
-    - [x] PIL
+    - [ ] PIL
   - [ ] GUI
 
 <hr>
