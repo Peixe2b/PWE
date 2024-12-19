@@ -5,7 +5,7 @@
   <a href="#sobre">Sobre</a> • 
   <a href="#todo">Todo</a> • 
   <a href="#suporte">Suporte</a> • 
-  <a href="#instalacao">Instalação</a> • 
+  <a href="#instalação">Instalação</a> • 
   <a href="#uso">Uso</a> •
   <a href="#documentação">Documentação</a>
 </div>
