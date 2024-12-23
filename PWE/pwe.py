@@ -2,12 +2,11 @@ from typing import (
     Any,
     Union, 
     TypeAlias,
-    List,
     Callable
 )
 from ctypes import (
     c_int, c_uint8, c_uint32,
-    c_bool, c_float, c_void_p,
+    c_bool, c_void_p,
     c_wchar_p, c_char_p, POINTER,
     CDLL
 )
@@ -17,6 +16,7 @@ from logging import info, warning, error
 
 from PWE.pwe_events import *
 from PWE.pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
+from PWE.initialize import *
 
 
 PWE_SYSTEM = system()
@@ -64,9 +64,9 @@ class PWEColor:
 @dataclass
 class PWEEvent:
     event_name: c_wchar_p
-    event_type: Union[c_wchar_p, c_uint32]
+    event_type: Union[c_void_p, c_wchar_p]
     event_callback: Union[None, Callable]
-    event_return: Union[None, Any]    
+    event_return: Union[c_void_p, Any]    
 
 
 
@@ -178,9 +178,9 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
 
 def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
     if state == PWE_INITIALIZE:
-        sdl.SDL_Init(0x00000020)
-        sdl.SDL_Init(0x00000010)
-        sdl.SDL_Init(0x00004000)
+        sdl.SDL_Init(PWE_INIT_VIDEO)
+        sdl.SDL_Init(PWE_INIT_AUDIO)
+        sdl.SDL_Init(PWE_INIT_EVENTS)
         return None
     sdl.SDL_Quit()
 
@@ -241,6 +241,7 @@ def PWE_Terminate() -> None:
     After calling this function, no SDL functions should be called, and the SDL library should not be used.
     """
     init_or_quit_sdl(PWE_QUIT, sdl)
+    del sdl
 
 
 
