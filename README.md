@@ -1,6 +1,6 @@
 <div align="center">
   <h1>PWE</h1>
-  Um framework de jogo simples, mas eficiente
+  A simple but efficient game framework
   
   <a href="#about">About</a> • 
   <a href="#todo">Todo</a> • 
