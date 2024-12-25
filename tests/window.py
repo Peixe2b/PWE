@@ -1,6 +1,6 @@
 
 
-class TESTWindow:
+class TestWindow:
     def test_open_window():
         pass
 
@@ -27,7 +27,3 @@ class TESTWindow:
 
     def test_windowA_windowB():
         pass
-
-
-if __name__ == "__main__":
-    pass
