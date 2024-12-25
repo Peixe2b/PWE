@@ -12,7 +12,3 @@ class TestSDL:
 
     def test_sdl_terminate():
         pass
-
-
-if __name__ == "__main__":
-    TEST = SDLTests()
