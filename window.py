@@ -1,3 +1,5 @@
+# import PWE
+
 from PWE import *
 
 PWE_Init()

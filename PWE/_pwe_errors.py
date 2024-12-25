@@ -18,5 +18,6 @@ class PWEPlatformError(Exception):
         self.message = message
         super().__init__(message)
     
-    def __str__(self) -> str:
+    def __str__(self) -> str: # change to __repr__
         return self.message
+

@@ -1,6 +1,14 @@
+# PWE Initialize constants
+PWE_INIT_VIDEO = 0x00000020
+PWE_INIT_AUDIO = 0x00000010
+PWE_INIT_EVENTS = 0x00004000
+PWE_FPS = 60
+
 # Constants for key codes in the project
 PWE_NO_ERROR = 0
 PWE_ERROR = 0x0001
+PWE_RELEASE = 0
+PWE_PRESS = 1
 
 # ASCII values for common keys
 PWE_KEY_SPACE = 32
