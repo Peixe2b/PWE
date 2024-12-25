@@ -11,11 +11,6 @@ from ctypes import (
 from platform import system, python_version
 from logging import info, warning, error
 
-from PWE._pwe_initialize import (
-   PWE_VERSION, PWE_NAME, PWE_INITIALIZE, PWE_QUIT,
-   PWE_FALSE, PWE_TRUE
-)
-
 from PWE._pwe_constants import *
 from PWE._pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
 from PWE._pwe_datatypes import * 

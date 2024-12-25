@@ -7,7 +7,7 @@ from typing import (
     Union, Callable, Any
 )
 from dataclasses import dataclass 
-from PWE._pwe_initialize import PWE_TRUE, PWE_FALSE, PWE_NUMBER
+from PWE._pwe_constants import *
 
 
 @dataclass
