@@ -8,32 +8,27 @@ from ctypes import (
     c_wchar_p, c_char_p, POINTER,
     CDLL, cdll
 )
-
-PWE_VERSION: tuple = (1, 0, 0)
-PWE_NAME: str = "Python Window Engine"
-
-PWE_INITIALIZE: TypeAlias = int
-PWE_QUIT: TypeAlias = int
-PWE_TRUE: TypeAlias = c_bool 
-PWE_FALSE: TypeAlias = c_bool
-PWE_NUMBER: TypeAlias = c_int
-
 from platform import system, python_version
 from logging import info, warning, error
 
+from PWE._pwe_initialize import (
+   PWE_VERSION, PWE_NAME, PWE_INITIALIZE, PWE_QUIT,
+   PWE_FALSE, PWE_TRUE
+)
+
 from PWE._pwe_constants import *
 from PWE._pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
-from PWE._pwe_datatypes import *
+from PWE._pwe_datatypes import * 
 
 
-sdl = 0b1
+sdl = None
 PWE_SYSTEM = system()
 PWE_PLATFORM_LINUX: str = "Linux"
 PWE_PLATFORM_DARWIN: str = "Darwin"
 PWE_PLATFORM_WINDOWS: str = "Windows"
 PWE_WINDOW_SDL = "SDL2.dll"
 PWE_DARWIN_SDL = "libSDL2.dylib"
-PWE_LINUX_SDL = "libSDL2.so"
+PWE_LINUX_SDL = "libSDL2.so" 
 
 class PWELogger(object):
     @staticmethod
@@ -41,29 +36,14 @@ class PWELogger(object):
             msg: str,
             error_type: Union[PWEBasicException, PWETypeError, PWEPlatformError]
         ) -> None:
-        """
-        Args:
-            msg (str): _description_
-            error_type (Union[PWEBasicException, PWETypeError, PWEPlatformError]): _description_
-        """
         error(f"{error_type.__name__}... {msg}")
     
     @staticmethod
     def show_log(msg: str) -> None:
-        """_summary_
-
-        Args:
-            msg (str): _description_
-        """
         info(msg)
     
     @staticmethod
     def show_warning(msg: str) -> None:
-        """_summary_
-
-        Args:
-            msg (str): _description_
-        """
         warning(msg)
 
 class PWEEventController:
@@ -94,10 +74,6 @@ def check_platform():
     return PWE_FALSE
 
 def get_info() -> tuple:
-    """
-    Returns:
-        tuple: (PWE version, system architecture, PWE name, Python version)
-    """
     PWELogger.show_log(f"PWE version: {PWE_VERSION}")
     PWELogger.show_log(f"System architecture: {PWE_SYSTEM}")
     PWELogger.show_log(f"PWE name: {PWE_NAME}")
@@ -108,10 +84,6 @@ def get_info() -> tuple:
     )
 
 def open_sdl_library(cdll_name) -> Union[None, Any]:
-    """
-    Returns:
-        Union[None, Any]: SDL library loaded or None if not found
-    """
     try:
         cdll.LoadLibrary(cdll_name)
         return CDLL(cdll_name)
@@ -251,18 +223,6 @@ def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicException, Any]:
 
 
 def PWE_PollEvents(events: PWEEventController) -> bool:
-    """
-    Polls for events from the event controller.
-
-    This function iterates through the events in the event controller and processes each event.
-    It returns True if there are more events to process, and False if the event controller is empty.
-
-    Parameters:
-        events (PWEEventController): The event controller containing the events to be processed.
-
-    Returns:
-        bool: True if there are more events to process, False if the event controller is empty.
-    """
     while events.has_more():
         events.next()
         # PWELogger.show_warning(str(events.type))

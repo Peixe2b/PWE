@@ -1,9 +1,6 @@
-# import PWE
-
 from PWE import *
 
 PWE_Init()
-
 window = PWE_CreateWindow("MyGame", 800, 500)
 
 try:
