@@ -1,6 +1,6 @@
 
 
-class TESTWindow:
+class TestWindow:
     def test_open_window():
         pass
 
