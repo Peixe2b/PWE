@@ -1,10 +1,7 @@
 
 
-class SDLTests:
+class TestSDL:
     def test_sdl_init():
-        pass
-
-    def test_sdl_color():
         pass
 
     def test_sdl_types():
