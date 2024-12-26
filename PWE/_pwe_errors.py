@@ -2,7 +2,7 @@ class PWETypeError(TypeError):
     """Type Error"""
 
 
-class PWEBasicException(Exception):
+class PWEBasicError(Exception):
     """Basic raise exception"""
     def __init__(self, message: str):
         self.message = message
