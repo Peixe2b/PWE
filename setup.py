@@ -14,7 +14,7 @@ setup(
         'Development Status :: 1 - Beta',
         'Programming Language :: Python :: 3.12.1',
         'License :: Apache License',
-        'Operating System :: Windows, Linux',
+        'Operating System :: Linux',
     ],
     python_requires='>=3.12',
     install_requires=['ctypes'],
