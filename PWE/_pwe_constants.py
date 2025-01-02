@@ -8,8 +8,8 @@ PWE_NAME: str = "Python Window Engine"
 # PWE Type aliases
 PWE_INITIALIZE: TypeAlias = int
 PWE_QUIT: TypeAlias = int
-PWE_TRUE: TypeAlias = c_bool 
-PWE_FALSE: TypeAlias = c_bool
+PWE_TRUE: TypeAlias = c_bool # 1
+PWE_FALSE: TypeAlias = c_bool # 0
 PWE_NUMBER: TypeAlias = c_int 
 
 # PWE Initialize constants

@@ -12,7 +12,7 @@ from platform import system, python_version
 from logging import info, warning, error
 
 from PWE._pwe_constants import *
-from PWE._pwe_errors import PWEBasicException, PWETypeError, PWEPlatformError
+from PWE._pwe_errors import PWEBasicError, PWETypeError, PWEPlatformError
 from PWE._pwe_datatypes import * 
 
 
@@ -29,7 +29,7 @@ class PWELogger(object):
     @staticmethod
     def show_error(
             msg: str,
-            error_type: Union[PWEBasicException, PWETypeError, PWEPlatformError]
+            error_type: Union[PWEBasicError, PWETypeError, PWEPlatformError]
         ) -> None:
         error(f"{error_type.__name__}... {msg}")
     
@@ -103,7 +103,7 @@ def open_window(window: PWEWindow) -> Union[Any, None]:
         )
         return window_instance
     except AttributeError as e:
-        PWELogger.show_error(f"AttributeError... / {e}", PWEBasicException)
+        PWELogger.show_error(f"AttributeError... / {e}", PWEBasicError)
         return None
     except:
         PWELogger.show_error(f"Failed to create window: {window.title}", PWEPlatformError)
@@ -111,7 +111,7 @@ def open_window(window: PWEWindow) -> Union[Any, None]:
 
 
 
-def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]:
+def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]: # Initialize SDL 
     global sdl
     system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_platform()
 
@@ -206,15 +206,15 @@ def PWE_GetSurface(window: PWEWindow) -> Any:
     return None
 
 
-def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicException, Any]:
+def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicError, Any]:
     sdl.SDL_UpdateWindowSurface.argtypes = [c_void_p]
     sdl.SDL_UpdateWindowSurface.restype = c_void_p
 
     try:
         sdl.SDL_UpdateWindowSurface(window.handle)
-    except PWEBasicException as e:
-        PWELogger.show_error(f"Failed to update window: {window.title}, because {e}", PWEBasicException)
-        return PWEBasicException
+    except PWEBasicError as e:
+        PWELogger.show_error(f"Failed to update window: {window.title}, because {e}", PWEBasicError)
+        return PWEBasicError
 
 
 def PWE_PollEvents(events: PWEEventController) -> bool:
@@ -226,3 +226,8 @@ def PWE_PollEvents(events: PWEEventController) -> bool:
         events.index = 0
         return False
     return True
+
+
+"""
+CREATE A SDL singleton
+"""
