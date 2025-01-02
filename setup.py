@@ -17,7 +17,7 @@ setup(
         'Operating System :: Linux',
     ],
     python_requires='>=3.12',
-    install_requires=['ctypes'],
+    install_requires=['ctypes', 'pytest'],
     entry_points={
         'console_scripts': [
             'pwe_run=PWE.pwe_run:main'
