@@ -8,6 +8,7 @@ from typing import (
 )
 from dataclasses import dataclass 
 from PWE._pwe_constants import *
+from PWE.main import *
 
 
 @dataclass
