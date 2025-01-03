@@ -19,7 +19,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ### TODO
   - [x] Criação de janelas
-  - [x] Atualização e renderizar
+  - [ ] Atualização e renderizar
   - [ ] Gerenciamento de janelas
   - [ ] Editor de mapa
   - [ ] Editor de sprites
