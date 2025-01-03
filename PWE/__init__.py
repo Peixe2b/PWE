@@ -18,7 +18,7 @@
 """
 
 
-from PWE.main import * # Revomer o import __all__
+from PWE.main import main
 from PWE.pwe import (
     PWE_Init, PWE_Terminate,
     PWE_CreateWindow, PWE_UpdateWindow,

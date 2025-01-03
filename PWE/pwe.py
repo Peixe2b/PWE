@@ -8,22 +8,14 @@ from ctypes import (
     c_wchar_p, c_char_p, POINTER,
     CDLL, cdll
 )
-from platform import system, python_version
+from platform import python_version
 from logging import info, warning, error
 
+from PWE.main import *
 from PWE._pwe_constants import *
 from PWE._pwe_errors import PWEBasicError, PWETypeError, PWEPlatformError
 from PWE._pwe_datatypes import * 
 
-
-sdl = None
-PWE_SYSTEM = system()
-PWE_PLATFORM_LINUX: str = "Linux"
-PWE_PLATFORM_DARWIN: str = "Darwin"
-PWE_PLATFORM_WINDOWS: str = "Windows"
-PWE_WINDOW_SDL = "SDL2.dll"
-PWE_DARWIN_SDL = "libSDL2.dylib"
-PWE_LINUX_SDL = "libSDL2.so" 
 
 class PWELogger(object):
     @staticmethod
@@ -131,32 +123,11 @@ def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]: # Initialize SDL
 
 
 def PWE_Terminate() -> None:
-    """
-    Quits the Simple DirectMedia Layer (SDL) library.
-
-    This function is responsible for properly shutting down the SDL library and releasing any resources it has allocated.
-    After calling this function, no SDL functions should be called, and the SDL library should not be used.
-    """
     init_or_quit_sdl(PWE_QUIT, sdl)
-    del sdl
+    del sdl # create a cleanup function
 
 
 def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, None]:
-    """
-    Creates a new window with the specified parameters.
-
-    This function initializes a new window using the Simple DirectMedia Layer (SDL) library.
-    The window is created with the specified dimensions, title, and window properties.
-
-    Parameters:
-        title: str = window title
-        width: int = window width
-        height: int = window height
-
-    Returns:
-        Union[PWEWindow, None]: A PWEWindow object representing the created window, or None if the window creation failed.
-    """
-
     sdl.SDL_CreateWindow.argtypes = [
         c_char_p, c_int, c_int, c_int,
         c_int, c_int
@@ -177,20 +148,6 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
 
 
 def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
-    """
-    Checks if the specified window should be closed.
-
-    This function checks the 'closed' attribute of the given PWEWindow object.
-    If the 'closed' attribute is set to PWE_TRUE, the function returns True, indicating that the window should be closed.
-    Otherwise, the function returns False, indicating that the window should not be closed.
-
-    Parameters:
-        window (PWEWindow): The PWEWindow object to check for closure.
-
-    Returns:
-        Union[PWE_TRUE or PWE_FALSE]: PWE_TRUE if the window should be closed, PWE_FALSE otherwise.
-    """
-
     if window.closed == PWE_TRUE:
         return PWE_TRUE
     return PWE_FALSE
@@ -220,7 +177,6 @@ def PWE_UpdateWindow(window: PWEWindow) -> Union[PWEBasicError, Any]:
 def PWE_PollEvents(events: PWEEventController) -> bool:
     while events.has_more():
         events.next()
-        # PWELogger.show_warning(str(events.type))
 
     if events.has_more() == False:
         events.index = 0
