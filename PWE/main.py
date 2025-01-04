@@ -35,7 +35,7 @@ PWE_FPS = 60
 def main():
     # System config
     # Load Classes
-    # Load engine
+    # Load engine/Classes config
     # Load Json files
     # Get All singletons
     pass
