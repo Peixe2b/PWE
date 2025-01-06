@@ -1,11 +1,10 @@
 from ctypes import (
-    c_int, c_uint8, c_uint32,
-    c_bool, c_void_p,
-    c_wchar_p, c_char_p, POINTER,
-    CDLL, cdll
+    c_int, c_void_p,
+    c_wchar_p, c_char_p,
+    POINTER, CDLL, cdll
 )
 from platform import python_version
-from typing import Any
+from typing import Any, Union
 
 from PWE.main import *
 from PWE.config import PWE_NAME, PWE_VERSION
@@ -16,10 +15,9 @@ from PWE._pwe_errors import *
 
 
 def cleanup_sdl():
-    # Check SDL exist
-    # Try clean up sdl
-    del sdl # cleanup
-
+    if not isinstance(sdl_singleton.SDL, None):
+        del sdl_singleton.SDL
+    
 def read_extension_file():
     # Get path
     # Check all files
@@ -73,7 +71,7 @@ def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
 def open_window(window: PWEWindow) -> Union[Any, None]:
     try:
         title_encode = c_char_p(window.title)
-        window_instance = sdl.SDL_CreateWindow(
+        window_instance = sdl_singleton.SDL.SDL_CreateWindow(
             title_encode.value, window.x, window.y, window.width,
             window.height, 0
         )
