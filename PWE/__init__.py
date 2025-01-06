@@ -25,4 +25,4 @@ from PWE.pwe import (
     PWE_WindowShouldClose, PWE_PollEvents,
     PWE_GetSurface, PWEEventController
 )
-from PWE._pwe_constants import *
+from PWE._pwe_events import *
