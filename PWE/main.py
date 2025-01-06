@@ -1,8 +1,6 @@
 from platform import system
-from typing import TypeAlias
-from ctypes import c_bool, c_int
-
-from PWE.config import pwe_config, PWE_NAME, PWE_VERSION
+from typing import TypeAlias, Union
+from ctypes import c_int
 
 
 # All system config for initialize
@@ -15,27 +13,33 @@ PWE_WINDOW_SDL = "SDL2.dll"
 PWE_DARWIN_SDL = "libSDL2.dylib"
 PWE_LINUX_SDL = "libSDL2.so" 
 
-# Generate alias type
+# Generate alias type vars
+PWE_TRUE = 1
+PWE_FALSE = 0
+PWE_NUMBER: TypeAlias = Union[c_int, int]
+PWE_FPS = 60
 
-# PWE Type aliases (NOTA: TODAS AS VARIÁVEIS VÃO MUDAR PARA UMA LÓGICA BOOLEANA MELHOR)
+# Generate alias type FLAGS
 PWE_INITIALIZE: TypeAlias = int 
 PWE_QUIT: TypeAlias = int
-PWE_TRUE: TypeAlias = c_bool # 1
-PWE_FALSE: TypeAlias = c_bool # 0
-PWE_NUMBER: TypeAlias = c_int 
-
-# PWE Initialize constants
 PWE_INIT_VIDEO = 0x00000020
 PWE_INIT_AUDIO = 0x00000010
 PWE_INIT_EVENTS = 0x00004000
-PWE_FPS = 60
 
 # PWE Pointers for classes
 
+# PWE Singletons
+
 def main():
     # System config
+        # -> Open config file
     # Load Classes
+        # -> Load pointers
+        # -> Load classes
     # Load engine/Classes config
-    # Load Json files
-    # Get All singletons
+        # -> Config all classes
+    # Set software config
+        # -> Generate a simple "dir" --help
+    # Set all singletons
+        # -> Generate basic API
     pass

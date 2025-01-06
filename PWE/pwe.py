@@ -1,111 +1,20 @@
 from typing import (
-    Any, Union, 
-    TypeAlias 
+    Any, Union, Literal
 )
-from ctypes import (
-    c_int, c_uint8, c_uint32,
-    c_bool, c_void_p,
-    c_wchar_p, c_char_p, POINTER,
-    CDLL, cdll
-)
-from platform import python_version
-from logging import info, warning, error
+from ctypes import c_int, c_void_p, c_char_p
+
 
 from PWE.main import *
-from PWE._pwe_constants import *
-from PWE._pwe_errors import PWEBasicError, PWETypeError, PWEPlatformError
+from PWE.config import *
 from PWE._pwe_datatypes import * 
+from PWE._pwe_events import *
+from PWE._pwe_errors import PWEBasicError, PWETypeError, PWEPlatformError
+from PWE.core.utils import *
 
 
-class PWELogger(object):
-    @staticmethod
-    def show_error(
-            msg: str,
-            error_type: Union[PWEBasicError, PWETypeError, PWEPlatformError]
-        ) -> None:
-        error(f"{error_type.__name__}... {msg}")
-    
-    @staticmethod
-    def show_log(msg: str) -> None:
-        info(msg)
-    
-    @staticmethod
-    def show_warning(msg: str) -> None:
-        warning(msg)
-
-class PWEEventController:
-    def __init__(self):
-        self.index: int = 0
-        # self.events = PWE_EVENTS 
-        self.type: Any = None
-
-    def next(self) -> Union[None, Any]:
-        if self.has_more():
-            self.index += 1
-            self.type = PWE_EVENTS[self.index - 1]
-            return self.type
-        return None
-
-    def has_more(self) -> bool:
-        if self.index > len(self.events) - 1:
-            return False
-        return True
-
-
-def check_platform():
-    if PWE_SYSTEM in (
-        PWE_PLATFORM_LINUX, PWE_PLATFORM_DARWIN,
-        PWE_PLATFORM_WINDOWS
-    ): return PWE_TRUE
-    # raise PWEPlatformError
-    return PWE_FALSE
-
-def get_info() -> tuple:
-    PWELogger.show_log(f"PWE version: {PWE_VERSION}")
-    PWELogger.show_log(f"System architecture: {PWE_SYSTEM}")
-    PWELogger.show_log(f"PWE name: {PWE_NAME}")
-    PWELogger.show_log(f"Python version: {python_version()}")
-    return (
-        PWE_VERSION, PWE_SYSTEM, 
-        PWE_NAME, python_version()
-    )
-
-def open_sdl_library(cdll_name) -> Union[None, Any]:
-    try:
-        cdll.LoadLibrary(cdll_name)
-        return CDLL(cdll_name)
-    except FileNotFoundError:
-        PWELogger.show_error(f"SDL library not found: {cdll_name}", PWEPlatformError)
-        return None
-
-def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
-    if state == PWE_INITIALIZE:
-        sdl.SDL_Init(PWE_INIT_VIDEO)
-        sdl.SDL_Init(PWE_INIT_AUDIO)
-        sdl.SDL_Init(PWE_INIT_EVENTS)
-        return None
-    sdl.SDL_Quit()
-
-def open_window(window: PWEWindow) -> Union[Any, None]:
-    try:
-        title_encode = c_char_p(window.title)
-        window_instance = sdl.SDL_CreateWindow(
-            title_encode.value, window.x, window.y, window.width,
-            window.height, 0
-        )
-        return window_instance
-    except AttributeError as e:
-        PWELogger.show_error(f"AttributeError... / {e}", PWEBasicError)
-        return None
-    except:
-        PWELogger.show_error(f"Failed to create window: {window.title}", PWEPlatformError)
-        return None
-
-
-
-def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]: # Initialize SDL 
+def PWE_Init() -> Literal[True, False]: # Initialize SDL 
     global sdl
-    system_is_valid: Union[PWE_TRUE, PWE_FALSE] = check_platform()
+    system_is_valid: Literal[True, False] = check_platform()
 
     if system_is_valid != PWE_TRUE:
         PWELogger.show_error("System is invalid", PWEPlatformError)
@@ -124,7 +33,6 @@ def PWE_Init() -> Union[PWE_TRUE, PWE_FALSE]: # Initialize SDL
 
 def PWE_Terminate() -> None:
     init_or_quit_sdl(PWE_QUIT, sdl)
-    del sdl # create a cleanup function
 
 
 def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, None]:
@@ -147,7 +55,7 @@ def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, No
     return window
 
 
-def PWE_WindowShouldClose(window: PWEWindow) -> Union[PWE_TRUE, PWE_FALSE]:
+def PWE_WindowShouldClose(window: PWEWindow) -> Literal[True, False]:
     if window.closed == PWE_TRUE:
         return PWE_TRUE
     return PWE_FALSE
@@ -182,8 +90,4 @@ def PWE_PollEvents(events: PWEEventController) -> bool:
         events.index = 0
         return False
     return True
-
-
-"""
-CREATE A SDL singleton
-"""
+ 

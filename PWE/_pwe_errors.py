@@ -20,4 +20,3 @@ class PWEPlatformError(Exception):
     
     def __str__(self) -> str: # change to __repr__
         return self.message
-
