@@ -13,29 +13,29 @@
 <hr>
 
 ### ABOUT
-**PWE** is a simple and powerful python framework for creating games for desktop PCs.
-It is an open-source re-implementation of the SDL2 based in SDL2.
+**PWE** is a simple and python game framework for creating games for desktop.
+It is an open-source re-implementation of the SDL2 based in Pygame.
 
 <hr>
 
 ### TODO
-  - [x] Criação de janelas
-  - [ ] Atualização e renderizar
-  - [ ] Gerenciamento de janelas
-  - [ ] Editor de mapa
-  - [ ] Editor de sprites
-  - [ ] Texturas
-  - [ ] Áudio
-  - [x] Tratamento de Erros
-  - [ ] Gerenciador de estado de jogo  
-  - [ ] Criação de componentes
+  - [x] Window Creation
+  - [ ] Update and Draw
+  - [ ] Window management
+  - [ ] Map Editor
+  - [ ] Sprite Editor
+  - [ ] Texture
+  - [ ] Audio
+  - [x] Error handling
+  - [ ] Game state manager  
+  - [ ] Component creation
   - [ ] GameTimer
   - [ ] IO
-  - [ ] Sistema de Animação
-  - [ ] Gerenciador de eventos
-  - [ ] Entradas de teclado e mouse
+  - [ ] Animator system
+  - [ ] Event manager
+  - [ ] Keyboard and mouse input
   - [x] Logger
-  - [ ] Conexões com outras APIs
+  - [ ] Connections with other APIs
     - [ ] OpenGL
     - [ ] CUDA
     - [ ] STB
@@ -47,16 +47,13 @@ It is an open-source re-implementation of the SDL2 based in SDL2.
 <hr>
 
 ### SUPORT
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+**PWE** supports connections with some operating systems for desktop, Linux and MacOS.
 
- * Windows
-    * Windows 10
-    * Windows 8.1 (With OpenGL and SDL2 DLL)
  * MacOS
  * Linux
     * Ubuntu
     * Bothi Linux
-    * Linux Mint
+    * Linux Mint 22
     * Debian
 
 <hr>
