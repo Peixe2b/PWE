@@ -14,7 +14,7 @@
 
 ### ABOUT
 **PWE** is a simple and powerful python framework for creating games for desktop PCs.
-It is an open-source re-implementation of the SDL2 based in XNA.
+It is an open-source re-implementation of the SDL2 based in SDL2.
 
 <hr>
 
