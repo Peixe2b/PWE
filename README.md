@@ -1,4 +1,6 @@
 <div align="center">
+  <img src="https://github.com/user-attachments/assets/191b8f00-08cd-4776-b583-1c1c6820b20f">
+  
   <h1>PWE</h1>
   A simple but efficient game framework
   
