@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/191b8f00-08cd-4776-b583-1c1c6820b20f">
-  
+  <img width="232" height="211" src="https://github.com/user-attachments/assets/6e85afe7-f8cb-4a08-90ad-75035d53331b">
+
   <h1>PWE</h1>
   A simple but efficient game framework
-  
+
   <a href="#about">About</a> • 
   <a href="#todo">Todo</a> • 
   <a href="#suport">Suport</a> • 
