@@ -4,7 +4,7 @@ from ctypes import (
     POINTER, CDLL, cdll
 )
 from platform import python_version
-from typing import Any, Union
+from typing import Any, Literal, Union
 
 from PWE.main import *
 from PWE.config import PWE_NAME, PWE_VERSION
@@ -15,9 +15,9 @@ from PWE._pwe_errors import *
 
 
 def cleanup_sdl():
-    if not isinstance(sdl_singleton.SDL, None):
+    if not isinstance(sdl_singleton.SDL, str):
         del sdl_singleton.SDL
-    
+
 def read_extension_file():
     # Get path
     # Check all files
@@ -57,7 +57,7 @@ def open_sdl_library(cdll_name) -> Union[None, Any]:
         PWELogger.show_error(f"SDL library not found: {cdll_name}", PWEPlatformError)
         return None
 
-def init_or_quit_sdl(state: Union[PWE_INITIALIZE, PWE_QUIT], sdl: Any) -> None:
+def init_or_quit_sdl(state: Union[int, None], sdl: Any) -> None:
     sdl.SDL_Init.restype = c_int
     sdl.SDL_Quit.restype = c_void_p
 

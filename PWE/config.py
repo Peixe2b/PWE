@@ -1,8 +1,8 @@
 PWE_VERSION: tuple = (1, 0, 0)
 PWE_NAME: str = "Python Window Engine" 
 
-LINUX_SDL_PATH = "" # Path for linux
-LINUX_OPENGL_PATH = "" # Path for linux
+LINUX_SDL_PATH: str = "" # Path for linux
+LINUX_OPENGL_PATH: str = "" # Path for linux
 
 pwe_config = {
     "project": PWE_NAME,

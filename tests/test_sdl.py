@@ -1,14 +1,14 @@
 
 
 class TestSDL:
-    def test_sdl_init():
+    def test_sdl_init(self):
         pass
 
-    def test_sdl_types():
+    def test_sdl_types(self):
         pass
 
-    def test_help_sdl():
+    def test_help_sdl(self):
         pass
 
-    def test_sdl_terminate():
+    def test_sdl_terminate(self):
         pass

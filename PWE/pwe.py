@@ -38,7 +38,7 @@ def PWE_Terminate() -> None:
 
 
 def PWE_CreateWindow(title: str, width: int, height: int) -> Union[PWEWindow, None]:
-    sdl_singleton.SDL.SDL_CreateWindow.argtypes = [
+    sdl_singleton.SDL.SDL_CreateWindow.argtypes = [ 
         c_char_p, c_int, c_int, c_int,
         c_int, c_int
     ]
