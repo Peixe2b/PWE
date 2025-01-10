@@ -1,4 +1,4 @@
-PWE_VERSION: tuple = (1, 0, 0)
+PWE_VERSION: tuple = (0, 0, 2)
 PWE_NAME: str = "Python Window Engine" 
 
 LINUX_SDL_PATH: str = "" # Path for linux
