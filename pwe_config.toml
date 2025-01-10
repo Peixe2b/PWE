@@ -1,0 +1,20 @@
+[pwe-config]
+name = "PWE"
+full_name = "Python Window Engine"
+major_version = 0
+minor_version = 0
+patch = 2
+small_description = "PWE is a game framework for creating games"
+
+[pwe-config.dependencies]
+Python = ">= 3.9"
+PyPy = "7.x"
+SDL = "SDL2"
+
+[game-config]
+title = "Game1"
+width = 640
+height = 480
+background_color = "black" # Background color of the game window
+running_slowly = false # Indicates if the game is running with a delay
+start_delta_time = 0 # Initial delta time, in seconds
