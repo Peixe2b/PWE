@@ -9,7 +9,7 @@ class PWELogger(object):
     @staticmethod
     def show_error(
             msg: str,
-            error_type: Union[PWEBasicError, PWETypeError, PWEPlatformError]
+            error_type
         ) -> None:
         error(f"{error_type.__name__}... {msg}")
     
@@ -25,7 +25,6 @@ class PWELogger(object):
 class PWEEventController:
     def __init__(self) -> None:
         self.index: int = 0
-        # self.events = PWE_EVENTS 
         self.type: Any = None
 
     def next(self) -> Union[None, Any]:
@@ -39,3 +38,6 @@ class PWEEventController:
         if self.index > len(PWE_EVENTS) - 1:
             return False
         return True
+
+    def reset(self) -> None:
+        self.index = 0

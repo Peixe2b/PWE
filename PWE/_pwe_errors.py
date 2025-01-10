@@ -1,9 +1,6 @@
 class PWETypeError(TypeError):
     """Type Error"""
 
-    def __name__(self) -> str:
-        return "PWE Type error"
-
 
 class PWEBasicError(Exception):
     """Basic raise exception"""
@@ -13,9 +10,6 @@ class PWEBasicError(Exception):
     
     def __str__(self) -> str:
         return self.message
-    
-    def __name__(self) -> str:
-        return "PWE Basic exception"
 
 
 class PWEPlatformError(Exception):
@@ -26,6 +20,3 @@ class PWEPlatformError(Exception):
     
     def __str__(self) -> str: # change to __repr__
         return self.message
-
-    def __name__(self) -> str:
-        return "PWE Platformer error"
