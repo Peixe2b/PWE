@@ -27,8 +27,8 @@ PWE_INIT_EVENTS = 0x00004000
 
 # Singletons classes
 class SDLSingleton:
-    def __init__(self): self.__sdl: Any | None = None
-    def set_sdl(self, value: Any): self.__sdl = value
+    def __init__(self) -> None: self.__sdl: Any | None = None
+    def set_sdl(self, value: Any) -> None: self.__sdl = value
     @property
     def SDL(self): return self.__sdl # <- Return SDL (None | SDL libc)
 

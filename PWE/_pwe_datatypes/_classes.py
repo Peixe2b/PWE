@@ -23,7 +23,7 @@ class PWELogger(object):
     
 
 class PWEEventController:
-    def __init__(self):
+    def __init__(self) -> None:
         self.index: int = 0
         # self.events = PWE_EVENTS 
         self.type: Any = None
@@ -36,6 +36,6 @@ class PWEEventController:
         return None
 
     def has_more(self) -> bool:
-        if self.index > len(self.events) - 1:
+        if self.index > len(PWE_EVENTS) - 1:
             return False
         return True
