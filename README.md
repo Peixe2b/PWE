@@ -51,12 +51,10 @@ It is an open-source re-implementation of the SDL2 based in Pygame.
 ### SUPORT
 **PWE** supports connections with some operating systems for desktop, Linux and MacOS.
 
- * MacOS
  * Linux
-    * Ubuntu
     * Bothi Linux
     * Linux Mint 22
-    * Debian
+    * MiniOS
 
 <hr>
 
