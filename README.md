@@ -16,7 +16,7 @@
 
 ### ABOUT
 **PWE** is a simple and python game framework for creating games for desktop.
-It is an open-source re-implementation of the SDL2 based in Pygame.
+It is an open-source re-implementation of the SDL2 inspired in Pygame.
 
 <hr>
 
@@ -42,49 +42,57 @@ It is an open-source re-implementation of the SDL2 based in Pygame.
     - [ ] CUDA
     - [ ] STB
     - [ ] OpenAL
-    - [x] SDL2
+    - [ ] SDL2
     - [ ] PIL
   - [ ] GUI
 
 <hr>
 
 ### SUPORT
-**PWE** supports connections with some operating systems for desktop, Linux and MacOS.
+**PWE** supports many Linux distributions!
 
- * MacOS
  * Linux
     * Ubuntu
     * Bothi Linux
     * Linux Mint 22
     * Debian
+    * MinoOS
 
 <hr>
 
 ### INSTALLATION
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  
-#### Linux (Mint, Ubuntu, Bodhi Linux)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The installation is different for each operating system, but simple to execute. For now, PWE only works on Linux, but in the future, we will extend it to macOS.
+
+#### Linux (Mint, Ubuntu, Bodhi Linux...)
 
 ```bash
 sudo apt-get install libsdl2-dev
 ```
 
-#### MacOS
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-#### Windows
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+When you install SDL2, you can install PyPy 7.x to improve the performance of your game, as PyPy provides JIT compilation, being much more efficient compared to CPython. **PWE works the same way in both compilers**.
 
 <hr>
 
 ### USE
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+After the installation, let's create a window! It's very simple to create a window in **PWE**
+
+```python
+from PWE import * # Import PWE and constants
+from time import sleep
+
+
+PWE_Init() # Initialize SDL Video, events and audio
+window = PWE_CreateWindow("Game1", 680, 450) # Create a window
+surface = PWE_GetSurface(window) # Get window surface
+
+PWE_UpdateWindow(window) # Update window screen
+sleep(5) # Delay for 5 seconds
+
+PWE_Terminate() # Clean Up
+```
 
 <hr>
 
 ### DOCUMENTATION
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+We are developing documentation and fixing errors related to the lib. The documentation is being written from the 'docs' of PWE. If you want to contribute, just send a pull request to us.
