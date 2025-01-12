@@ -12,7 +12,7 @@ from PWE._pwe_datatypes import (
     PWELogger, PWEWindow
 )
 from PWE._pwe_errors import *
-
+from PWE.SDL import *
 
 def cleanup_sdl():
     if not isinstance(sdl_singleton.SDL, str):
