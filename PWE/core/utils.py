@@ -1,10 +1,9 @@
 from ctypes import (
-    c_int, c_void_p,
-    c_wchar_p, c_char_p,
+    c_int, c_void_p, c_char_p,
     POINTER, CDLL, cdll
 )
 from platform import python_version
-from typing import Any, Literal, Union
+from typing import Any, List, Union
 
 from PWE.main import *
 from PWE.config import PWE_NAME, PWE_VERSION
@@ -12,26 +11,27 @@ from PWE._pwe_datatypes import (
     PWELogger, PWEWindow
 )
 from PWE._pwe_errors import *
+from PWE.SDL import *
 
 
-def cleanup_sdl():
+def cleanup_sdl() -> None:
     if not isinstance(sdl_singleton.SDL, str):
         del sdl_singleton.SDL
 
-def read_extension_file():
+def read_extension_file() -> List[Any]:
     # Get path
     # Check all files
     # Check type in all files
     # Return extension file
-    pass
+    return []
 
-def run_second_code():
+def run_second_code() -> None:
     # Check existent code
     # Try run code
     # Return PWE_TRUE or PWE_FALSE
     pass
 
-def check_platform():
+def check_platform() -> bool:
     if PWE_SYSTEM in (
         PWE_PLATFORM_LINUX, PWE_PLATFORM_DARWIN,
         PWE_PLATFORM_WINDOWS
